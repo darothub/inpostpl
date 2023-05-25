@@ -3,6 +3,7 @@ package pl.inpost.recruitmenttask.data.model
 import android.os.Build
 import androidx.annotation.RequiresApi
 import pl.inpost.recruitmenttask.data.local.entities.ShipmentNetworkEntity
+import java.lang.Exception
 import java.time.ZonedDateTime
 
 data class ShipmentNetwork (
@@ -20,15 +21,22 @@ data class ShipmentNetwork (
 )
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun ShipmentNetwork.toEntity() = ShipmentNetworkEntity(
-    number = this.number,
-    shipmentType = this.shipmentType,
-    status = ShipmentStatus.valueOf(this.status),
-    openCode = this.openCode,
-    expiryDate = this.expiryDate?.toInstant()?.toEpochMilli(),
-    storedDate = this.storedDate?.toInstant()?.toEpochMilli(),
-    pickUpDate = this.pickUpDate?.toInstant()?.toEpochMilli(),
-    receiver = this.receiver,
-    sender = this.sender,
-    operations = this.operations
-)
+fun ShipmentNetwork.toEntity(): ShipmentNetworkEntity {
+    val status: ShipmentStatus = try {
+        ShipmentStatus.valueOf(this.status)
+    } catch (e: IllegalArgumentException) {
+        ShipmentStatus.OTHER
+    }
+    return ShipmentNetworkEntity(
+        number = this.number,
+        shipmentType = this.shipmentType,
+        status = status,
+        openCode = this.openCode,
+        expiryDate = this.expiryDate?.toInstant()?.toEpochMilli(),
+        storedDate = this.storedDate?.toInstant()?.toEpochMilli(),
+        pickUpDate = this.pickUpDate?.toInstant()?.toEpochMilli(),
+        receiver = this.receiver,
+        sender = this.sender,
+        operations = this.operations
+    )
+}

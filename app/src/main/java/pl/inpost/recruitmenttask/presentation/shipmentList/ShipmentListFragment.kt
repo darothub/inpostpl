@@ -9,6 +9,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.inpost.recruitmenttask.R
 import pl.inpost.recruitmenttask.databinding.FragmentShipmentListBinding
 import pl.inpost.recruitmenttask.databinding.ShipmentItemBinding
+import pl.inpost.recruitmenttask.presentation.viewmodel.ShipmentListViewModel
 
 @AndroidEntryPoint
 class ShipmentListFragment : Fragment() {

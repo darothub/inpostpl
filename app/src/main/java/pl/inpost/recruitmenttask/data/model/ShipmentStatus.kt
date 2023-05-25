@@ -64,6 +64,3 @@ enum class ShipmentStatus(
 
     abstract fun getOrderId(): Int
 }
-//fun main() {
-//    ShipmentStatus.valueOf("")
-//}
