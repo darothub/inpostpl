@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_margin="10dp"
     >
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,23 +13,20 @@
         >
         <TextView
             android:id="@+id/numberOfParcelTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/number_of_parcel"
-            android:textAllCaps="true"
+            style="@style/KeyTextViewStyle"
             />
         <TextView
             android:id="@+id/numberOfParcelValueTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_below="@id/numberOfParcelTv"
             android:text="@string/sample_number_of_parcel"
-            android:textAllCaps="true"
+            style="@style/ValueTextViewStyle"
             />
         <ImageView
+            android:id="@+id/deliveryCarImage"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/fast_delivery"
             android:layout_alignParentEnd="true"
             android:layout_alignBottom="@id/numberOfParcelValueTv"
             />
@@ -41,34 +39,27 @@
         >
         <TextView
             android:id="@+id/statusTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/status"
-            android:textAllCaps="true"
+            style="@style/KeyTextViewStyle"
             />
         <TextView
             android:id="@+id/waitingTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Waiting for pick up to"
             android:layout_alignParentEnd="true"
-            android:textAllCaps="true"
+            style="@style/KeyTextViewStyle"
             />
         <TextView
             android:id="@+id/statusValueTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_below="@id/statusTv"
             android:text=""
-            android:textAllCaps="true"
+            style="@style/ValueTextViewStyle"
             />
         <TextView
             android:id="@+id/waitingValueTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/waitingTv"
-            android:text="date"
+            android:text=""
+            style="@style/ValueTextViewStyle"
             />
     </RelativeLayout>
     <RelativeLayout
@@ -79,18 +70,15 @@
         >
         <TextView
             android:id="@+id/senderTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/sender"
-            android:textAllCaps="true"
+            style="@style/KeyTextViewStyle"
             />
 
         <TextView
             android:id="@+id/senderValueTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_below="@id/senderTv"
             android:text=""
+            style="@style/ValueTextViewStyle"
             />
         <LinearLayout
             android:id="@+id/moreLayout"

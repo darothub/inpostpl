@@ -20,8 +20,10 @@ class ShipmentListViewModel @Inject constructor(
     private val getShipmentGroupByHighlightUseCase: GetShipmentGroupByHighlightUseCase
 ) : ViewModel() {
 
-    private val mutableViewState = MutableLiveData<List<ShipmentNetworkEntity>>(emptyList())
-    val viewState: LiveData<List<ShipmentNetworkEntity>> = mutableViewState
+    private val mutableViewState = MutableLiveData<Map<Boolean, List<ShipmentNetworkEntity>>>(
+        hashMapOf()
+    )
+    val viewState: LiveData<Map<Boolean, List<ShipmentNetworkEntity>>> = mutableViewState
 
     init {
         refreshData()

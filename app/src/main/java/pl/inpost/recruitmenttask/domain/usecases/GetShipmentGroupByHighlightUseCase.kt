@@ -8,8 +8,8 @@ import javax.inject.Inject
 class GetShipmentGroupByHighlightUseCase @Inject constructor(
     private val shipmentNetworkRepository: ShipmentNetworkRepository
 ) {
-    suspend fun groupingByHighlight(): List<ShipmentNetworkEntity> {
-        val shipments = shipmentNetworkRepository.getShipments()
+    suspend fun groupingByHighlight(): Map<Boolean, List<ShipmentNetworkEntity>> {
+        val shipments = shipmentNetworkRepository.getShipments().groupBy { it.operations.highlight }
         Log.d("ShipmentByHighlight", "$shipments")
         return shipments
     }
