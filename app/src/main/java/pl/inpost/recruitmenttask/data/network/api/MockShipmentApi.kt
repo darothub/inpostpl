@@ -29,7 +29,7 @@ class MockShipmentApi(
 
         jsonAdapter.fromJson(json) as ShipmentsResponse
     }
-    private var firstUse = false
+    private var firstUse = true
 
     override suspend fun getShipments(): List<ShipmentNetwork> {
         delay(1000)

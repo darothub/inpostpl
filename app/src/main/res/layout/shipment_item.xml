@@ -1,58 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="10dp"
     android:layout_margin="10dp"
+
     >
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:padding="15dp"
         >
         <TextView
             android:id="@+id/numberOfParcelTv"
             android:text="@string/number_of_parcel"
             style="@style/KeyTextViewStyle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             />
         <TextView
             android:id="@+id/numberOfParcelValueTv"
             android:layout_below="@id/numberOfParcelTv"
             android:text="@string/sample_number_of_parcel"
             style="@style/ValueTextViewStyle"
+            app:layout_constraintTop_toBottomOf="@id/numberOfParcelTv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/deliveryCarImage"
+            app:layout_constraintHorizontal_bias="0"
             />
         <ImageView
             android:id="@+id/deliveryCarImage"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/fast_delivery"
-            android:layout_alignParentEnd="true"
-            android:layout_alignBottom="@id/numberOfParcelValueTv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/numberOfParcelValueTv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1"
             />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginTop="20dp"
-        >
         <TextView
             android:id="@+id/statusTv"
             android:text="@string/status"
             style="@style/KeyTextViewStyle"
+            app:layout_constraintTop_toBottomOf="@id/numberOfParcelValueTv"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp"
             />
         <TextView
             android:id="@+id/waitingTv"
-            android:text="Waiting for pick up to"
+            android:text=""
             android:layout_alignParentEnd="true"
             style="@style/KeyTextViewStyle"
+            app:layout_constraintTop_toBottomOf="@id/deliveryCarImage"
+            app:layout_constraintBottom_toBottomOf="@id/statusTv"
+            app:layout_constraintVertical_bias="1"
+            app:layout_constraintEnd_toEndOf="parent"
+
             />
         <TextView
+            android:layout_width="0dp"
             android:id="@+id/statusValueTv"
             android:layout_below="@id/statusTv"
             android:text=""
             style="@style/ValueTextViewStyle"
+            app:layout_constraintTop_toBottomOf="@id/statusTv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/waitingValueTv"
+            app:layout_constraintBottom_toBottomOf="@id/senderTv"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0"
+            android:ellipsize="none"
+            android:maxLines="2"
+            android:singleLine="false"
+            android:layout_marginEnd="15dp"
             />
         <TextView
             android:id="@+id/waitingValueTv"
@@ -60,18 +81,16 @@
             android:layout_below="@id/waitingTv"
             android:text=""
             style="@style/ValueTextViewStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/waitingTv"
             />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginTop="20dp"
-        >
         <TextView
             android:id="@+id/senderTv"
             android:text="@string/sender"
             style="@style/KeyTextViewStyle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/statusValueTv"
+            android:layout_marginTop="20dp"
             />
 
         <TextView
@@ -79,27 +98,18 @@
             android:layout_below="@id/senderTv"
             android:text=""
             style="@style/ValueTextViewStyle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/senderTv"
             />
-        <LinearLayout
-            android:id="@+id/moreLayout"
+        <TextView
+            android:id="@+id/arrows"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentEnd="true"
-            android:layout_alignBottom="@id/senderValueTv"
-            >
-            <TextView
-                android:id="@+id/moreTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="more"
-                />
-            <ImageView
-                android:id="@+id/arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_arrow_right_alt_24"
-                />
-        </LinearLayout>
-    </RelativeLayout>
-</LinearLayout>
+            android:text="@string/more"
+            app:drawableEndCompat="@drawable/baseline_arrow_right_alt_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/senderValueTv"
+
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

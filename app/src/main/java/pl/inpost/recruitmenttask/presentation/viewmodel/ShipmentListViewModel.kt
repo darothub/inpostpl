@@ -29,10 +29,11 @@ class ShipmentListViewModel @Inject constructor(
         refreshData()
     }
 
-    private fun refreshData() {
+    fun refreshData() {
         viewModelScope.launch {
             val shipments = getShipmentGroupByHighlightUseCase.groupingByHighlight()
             mutableViewState.setState { shipments }
         }
     }
+
 }
