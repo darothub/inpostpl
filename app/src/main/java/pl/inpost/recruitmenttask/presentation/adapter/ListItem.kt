@@ -1,4 +1,4 @@
-package pl.inpost.recruitmenttask.util
+package pl.inpost.recruitmenttask.presentation.adapter
 
 abstract class ListItem {
    companion object {

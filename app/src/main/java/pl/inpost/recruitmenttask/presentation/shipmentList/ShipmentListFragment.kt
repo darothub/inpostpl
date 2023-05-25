@@ -16,23 +16,22 @@ import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.Section
 import dagger.hilt.android.AndroidEntryPoint
 import pl.inpost.recruitmenttask.R
+import pl.inpost.recruitmenttask.data.local.entities.ShipmentNetworkEntity
 import pl.inpost.recruitmenttask.databinding.FragmentShipmentListBinding
+import pl.inpost.recruitmenttask.presentation.adapter.HeaderItem
+import pl.inpost.recruitmenttask.presentation.adapter.ListItem
+import pl.inpost.recruitmenttask.presentation.adapter.ShipmentBodyLayout
+import pl.inpost.recruitmenttask.presentation.adapter.ShipmentHeaderLayout
+import pl.inpost.recruitmenttask.presentation.adapter.ShipmentNetworkAdapter
 import pl.inpost.recruitmenttask.presentation.viewmodel.ShipmentListViewModel
-import pl.inpost.recruitmenttask.util.BodyItem
-import pl.inpost.recruitmenttask.util.HeaderItem
-import pl.inpost.recruitmenttask.util.ListItem
-import pl.inpost.recruitmenttask.util.ShipmentBodyLayout
-import pl.inpost.recruitmenttask.util.ShipmentHeaderLayout
-import pl.inpost.recruitmenttask.util.ShipmentNetworkAdapter
+import pl.inpost.recruitmenttask.util.viewBinding
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @AndroidEntryPoint
-class ShipmentListFragment : Fragment() {
-
+class ShipmentListFragment : Fragment(R.layout.fragment_shipment_list) {
+    private val binding by viewBinding(FragmentShipmentListBinding::bind)
     private val viewModel: ShipmentListViewModel by viewModels()
-    private var binding: FragmentShipmentListBinding? = null
-    lateinit var listAdapter: ShipmentNetworkAdapter
-    lateinit var listOfItems: MutableList<ListItem>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -43,84 +42,39 @@ class ShipmentListFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentShipmentListBinding.inflate(inflater, container, false)
-        return requireNotNull(binding).root
-    }
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listAdapter = ShipmentNetworkAdapter()
-        listOfItems = mutableListOf()
         val groupAdapter = GroupieAdapter()
         viewModel.viewState.observe(requireActivity()) { shipments ->
             shipments.forEach { shipmentNetwork ->
                 if(shipmentNetwork.key) {
-                    val header = HeaderItem("Highlighted")
-                    listOfItems.add(header)
-                    val section = Section()
-                    section.setHeader(ShipmentHeaderLayout("Highlighted"))
-                    shipmentNetwork.value.forEach {
-                        val item = ShipmentBodyLayout(it)
-                        section.add(item)
-                    }
-                    groupAdapter.add(section)
+                    handleGroupieSectioning("Highlighted", shipmentNetwork, groupAdapter)
                 } else {
-                    val section = Section()
-                    section.setHeader(ShipmentHeaderLayout("Not Highlighted"))
-                    shipmentNetwork.value.forEach {
-                        val item = ShipmentBodyLayout(it)
-                        section.add(item)
-                    }
-                    groupAdapter.add(section)
+                    handleGroupieSectioning("Not Highlighted", shipmentNetwork, groupAdapter)
                 }
             }
-            binding?.recyclerView?.adapter = groupAdapter
-            binding?.recyclerView?.layoutManager = LinearLayoutManager(requireContext())
+            binding.recyclerView.apply {
+                adapter = groupAdapter
+                layoutManager = LinearLayoutManager(requireContext())
+            }
         }
 
-        binding?.swipeRefresh?.setOnRefreshListener {
+        binding.swipeRefresh.setOnRefreshListener {
             Log.d("ShipmentFragment", "Refresh")
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
-
-    companion object {
-        fun newInstance() = ShipmentListFragment()
+    private fun handleGroupieSectioning(
+        header: String,
+        shipmentNetwork: Map.Entry<Boolean, List<ShipmentNetworkEntity>>,
+        groupAdapter: GroupieAdapter
+    ) {
+        val section = Section()
+        section.setHeader(ShipmentHeaderLayout("Highlighted"))
+        shipmentNetwork.value.forEach {
+            val item = ShipmentBodyLayout(it)
+            section.add(item)
+        }
+        groupAdapter.add(section)
     }
 }
-
-//shipments.forEach { shipmentNetwork ->
-//    if(shipmentNetwork.key) {
-//        val header = HeaderItem("Highlighted")
-//        Log.d("ListFragHighlight", "adding header...")
-//        listOfItems.add(header)
-//        shipmentNetwork.value.forEach {
-//            val body = BodyItem(it)
-//            Log.d("ListFragHighlight", "adding body...")
-//            listOfItems.add(body)
-//        }
-//        Log.d("ListFragHighlight", "finished adding header and body...")
-//
-//    } else {
-//        val header = HeaderItem("Not Highlighted")
-//        Log.d("ListFragNotHighlight", "adding header...")
-//        listOfItems.add(header)
-//        shipmentNetwork.value.forEach {
-//            val body = BodyItem(it)
-//            Log.d("ListFragNotHighlight", "adding body...")
-//            listOfItems.add(body)
-//        }
-//        Log.d("ListFragNotHighlight", "finished adding header and body...")
-//    }
-//    Log.d("ListFragment", "Set data")
-//    listAdapter.setData(listOfItems)
-//}
-//Log.d("ListFragment", "Setting adapter")
-//binding?.recyclerView?.adapter = listAdapter
-//binding?.recyclerView?.layoutManager = LinearLayoutManager(requireContext())
