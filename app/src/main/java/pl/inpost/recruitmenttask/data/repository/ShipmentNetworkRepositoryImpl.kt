@@ -19,7 +19,7 @@ class ShipmentNetworkRepositoryImpl @Inject constructor(
         return data.ifEmpty { getApiShipments() }
     }
 
-    private suspend fun getDbShipments() = shipmentNetworkDao.getShipments()
+    private suspend fun getDbShipments() = shipmentNetworkDao.getShipmentGroupingByHighlight()
     private suspend fun getApiShipments(): List<ShipmentNetworkEntity> {
         val shipments = api.getShipments()
         val entities = shipments.map {
