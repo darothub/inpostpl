@@ -10,8 +10,7 @@ import pl.inpost.recruitmenttask.databinding.ShipmentHeaderItemBinding
 import pl.inpost.recruitmenttask.databinding.ShipmentItemBinding
 import pl.inpost.recruitmenttask.util.toInPostDateString
 
-class ShipmentBodyLayout(private val shipment: ShipmentNetworkEntity): BindableItem<ShipmentItemBinding>() {
-
+class ShipmentBodyAdapter(private val shipment: ShipmentNetworkEntity, private val onLongPressListener: OnLongPressListener): BindableItem<ShipmentItemBinding>() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun bind(viewBinding: ShipmentItemBinding, position: Int) {
         val sender = if (shipment.sender?.email?.isEmpty() == true) {
@@ -27,6 +26,10 @@ class ShipmentBodyLayout(private val shipment: ShipmentNetworkEntity): BindableI
         viewBinding.senderValueTv.text = sender
         viewBinding.waitingTv.text = context.getString(shipment.status.nameRes)
         viewBinding.waitingValueTv.text = dateStr
+        viewBinding.root.setOnLongClickListener {
+            onLongPressListener.onBodyLongPress(shipment)
+            true
+        }
     }
 
     override fun getLayout() = R.layout.shipment_item
@@ -34,14 +37,6 @@ class ShipmentBodyLayout(private val shipment: ShipmentNetworkEntity): BindableI
     override fun initializeViewBinding(view: View): ShipmentItemBinding = ShipmentItemBinding.bind(view)
 }
 
-class ShipmentHeaderLayout(private val header: String): BindableItem<ShipmentHeaderItemBinding>() {
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun bind(viewBinding: ShipmentHeaderItemBinding, position: Int) {
-        viewBinding.headerTv.text = header
-    }
-
-    override fun getLayout() = R.layout.shipment_header_item
-
-    override fun initializeViewBinding(view: View): ShipmentHeaderItemBinding = ShipmentHeaderItemBinding.bind(view)
+interface OnLongPressListener {
+    fun onBodyLongPress(entity: ShipmentNetworkEntity)
 }

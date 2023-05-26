@@ -27,7 +27,8 @@ data class ShipmentNetworkEntity(
     @Embedded(prefix = "sender_")
     val sender: CustomerNetwork?,
     @Embedded
-    val operations: OperationsNetwork
+    val operations: OperationsNetwork,
+    var archived: Boolean = false
 
 )
 
