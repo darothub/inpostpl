@@ -1,8 +1,6 @@
-package pl.inpost.recruitmenttask.data
+package pl.inpost.recruitmenttask.domain.usecases
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -10,13 +8,15 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import pl.inpost.recruitmenttask.data.FakeRepositoryImpl
+import pl.inpost.recruitmenttask.data.FakeShipmentApi
+import pl.inpost.recruitmenttask.data.FakeShipmentNetworkDaoImpl
+import pl.inpost.recruitmenttask.data.MainCoroutineRule
 import pl.inpost.recruitmenttask.data.local.dao.ShipmentNetworkDao
-import pl.inpost.recruitmenttask.data.local.entities.ShipmentNetworkEntity
 import pl.inpost.recruitmenttask.data.model.toEntity
 import pl.inpost.recruitmenttask.data.network.api.ShipmentApi
 import pl.inpost.recruitmenttask.data.network.api.mockShipmentNetwork
 import pl.inpost.recruitmenttask.data.repository.ShipmentNetworkRepository
-import pl.inpost.recruitmenttask.domain.usecases.GetShipmentGroupByHighlightUseCase
 import pl.inpost.recruitmenttask.util.getOrAwaitValue
 
 @OptIn(ExperimentalCoroutinesApi::class)
