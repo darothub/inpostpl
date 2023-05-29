@@ -22,45 +22,18 @@ import pl.inpost.recruitmenttask.R
 enum class ShipmentStatus(
     @StringRes val nameRes: Int
 ) {
-    ADOPTED_AT_SORTING_CENTER(R.string.status_adopted_at_sorting_center) {
-        override fun getOrderId() = 5
-    },
-    SENT_FROM_SORTING_CENTER(R.string.status_sent_from_sorting_center) {
-        override fun getOrderId() = 6
-    },
-    ADOPTED_AT_SOURCE_BRANCH(R.string.status_adopted_at_source_branch) {
-        override fun getOrderId() = 3
-    },
-    SENT_FROM_SOURCE_BRANCH(R.string.status_sent_from_source_branch) {
-        override fun getOrderId() = 4
-    },
-    AVIZO(R.string.status_avizo) {
-        override fun getOrderId() = 10
-    },
-    CONFIRMED(R.string.status_confirmed) {
-        override fun getOrderId() = 2
-    },
-    CREATED(R.string.status_created) {
-        override fun getOrderId() = 1
-    },
-    DELIVERED(R.string.status_delivered) {
-        override fun getOrderId() = 8
-    },
-    OTHER(R.string.status_other) {
-        override fun getOrderId() = 7
-    },
-    OUT_FOR_DELIVERY(R.string.status_out_for_delivery) {
-        override fun getOrderId() = 11
-    },
-    PICKUP_TIME_EXPIRED(R.string.status_pickup_time_expired) {
-        override fun getOrderId() = 13
-    },
-    READY_TO_PICKUP(R.string.status_ready_to_pickup) {
-        override fun getOrderId() = 12
-    },
-    RETURNED_TO_SENDER(R.string.status_returned_to_sender) {
-        override fun getOrderId() = 9
-    };
+    CREATED(R.string.status_created),
+    CONFIRMED(R.string.status_confirmed),
+    ADOPTED_AT_SOURCE_BRANCH(R.string.status_adopted_at_source_branch),
+    SENT_FROM_SOURCE_BRANCH(R.string.status_sent_from_source_branch),
+    ADOPTED_AT_SORTING_CENTER(R.string.status_adopted_at_sorting_center),
+    SENT_FROM_SORTING_CENTER(R.string.status_sent_from_sorting_center),
+    OTHER(R.string.status_other),
+    DELIVERED(R.string.status_delivered),
+    RETURNED_TO_SENDER(R.string.status_returned_to_sender),
+    AVIZO(R.string.status_avizo),
+    OUT_FOR_DELIVERY(R.string.status_out_for_delivery),
+    READY_TO_PICKUP(R.string.status_ready_to_pickup),
+    PICKUP_TIME_EXPIRED(R.string.status_pickup_time_expired)
 
-    abstract fun getOrderId(): Int
 }

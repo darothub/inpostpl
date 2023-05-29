@@ -7,11 +7,11 @@ import pl.inpost.recruitmenttask.data.model.ShipmentStatus
 class ShipmentStatusConverter {
     @TypeConverter
     fun fromStatus(status: ShipmentStatus): Int {
-        return status.getOrderId()
+        return status.ordinal
     }
     @TypeConverter
-    fun toStatus(status: String): ShipmentStatus {
-        return enumValueOf(status)
+    fun toStatus(ordinal: Int): ShipmentStatus {
+        return ShipmentStatus.values().getOrElse(ordinal) {ShipmentStatus.OTHER}
     }
 }
 
