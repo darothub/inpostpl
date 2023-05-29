@@ -2,12 +2,10 @@ package pl.inpost.recruitmenttask.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
-import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import junit.framework.TestCase.assertTrue
@@ -23,9 +21,6 @@ import org.junit.Test
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 import org.junit.runner.RunWith
-import org.mockito.InjectMocks
-import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import pl.inpost.recruitmenttask.data.local.dao.ShipmentNetworkDao
 import pl.inpost.recruitmenttask.data.local.entities.ShipmentNetworkEntity
@@ -114,8 +109,9 @@ class RepositoryMockTest {
         verify { dao.getShipmentByOrder() }
         assert(data.isEmpty())
     }
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun getApiShipments() = runTest {
+    fun getApiShipmentsIsCalledWhenTheDatabaseIsEmpty() = runTest {
         val liveData = MutableLiveData(emptyList<ShipmentNetworkEntity>())
         coEvery { dao.getCount() } returns 0
         coEvery { api.getShipments() } returns emptyList() andThen listOf(mockShipmentNetwork(), mockShipmentNetwork())
@@ -128,6 +124,36 @@ class RepositoryMockTest {
             api.getShipments()
         }
         assert(repository.getShipments().getOrAwaitValue().size == 2)
+    }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun getApiShipmentsIsNotCalledWhenTheDatabaseIsNotEmpty() = runTest {
+        val liveData = MutableLiveData(emptyList<ShipmentNetworkEntity>())
+        coEvery { dao.getCount() } returns 1
+        repeat(2) {
+            repository.getApiShipments()
+        }
+        liveData.setState { listOf(mockShipmentNetwork().toEntity()) }
+        coEvery { dao.getShipmentByOrder() } returns  liveData
+        coVerify(exactly = 0) {
+            api.getShipments()
+        }
+        assert(repository.getShipments().getOrAwaitValue().size == 1)
+    }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun update() = runTest {
+        val shipmentNetworkEntity = mockShipmentNetwork().toEntity()
+        val shipment = shipmentNetworkEntity.copy(archived = true)
+        val liveData = MutableLiveData(emptyList<ShipmentNetworkEntity>())
+        coEvery { dao.getCount() } returns 1
+        coEvery { dao.update(shipmentNetworkEntity) }
+        liveData.setState { listOf(shipmentNetworkEntity) }
+        coEvery { dao.getShipmentByOrder() } returns liveData
+        coVerify(exactly = 0) {
+            api.getShipments()
+        }
+        assert(repository.getShipments().getOrAwaitValue().size == 1)
     }
 }
 

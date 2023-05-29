@@ -12,7 +12,7 @@ data class OperationsNetwork(
     val manualArchive: Boolean,
     val delete: Boolean,
     val collect: Boolean,
-    val highlight: Boolean,
+    var highlight: Boolean,
     val expandAvizo: Boolean,
     val endOfWeekCollection: Boolean
 )
