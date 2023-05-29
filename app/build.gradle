@@ -35,6 +35,17 @@ android {
     buildFeatures {
         viewBinding true
     }
+    sourceSets {
+        main {
+            java.srcDirs 'src/main/java'
+        }
+        test {
+            java.srcDirs 'src/test/java'
+        }
+        androidTest {
+            java.srcDirs 'src/androidTest/java'
+        }
+    }
 }
 
 kapt {
@@ -74,6 +85,16 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    testImplementation 'androidx.test:monitor:1.6.1'
+    testImplementation 'androidx.test.ext:junit-ktx:1.1.5'
+
+    testImplementation 'androidx.test:runner:1.5.2'
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
+    // Optional -- Mockito framework
+    testImplementation "org.mockito:mockito-core:2.25.0"
+    testImplementation "io.mockk:mockk:1.13.5"
+    androidTestImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
 }

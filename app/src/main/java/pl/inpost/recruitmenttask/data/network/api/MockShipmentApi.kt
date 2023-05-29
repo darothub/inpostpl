@@ -42,7 +42,7 @@ class MockShipmentApi(
     }
 }
 
-private fun mockShipmentNetwork(
+fun mockShipmentNetwork(
     number: String = Random.nextLong(1, 9999_9999_9999_9999).toString(),
     type: ShipmentType = ShipmentType.PARCEL_LOCKER,
     status: ShipmentStatus = ShipmentStatus.DELIVERED,
