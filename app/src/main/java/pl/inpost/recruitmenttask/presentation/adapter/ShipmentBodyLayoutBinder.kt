@@ -10,7 +10,8 @@ import pl.inpost.recruitmenttask.databinding.ShipmentHeaderItemBinding
 import pl.inpost.recruitmenttask.databinding.ShipmentItemBinding
 import pl.inpost.recruitmenttask.util.toInPostDateString
 
-class ShipmentBodyAdapter(private val shipment: ShipmentNetworkEntity, private val onLongPressListener: OnLongPressListener): BindableItem<ShipmentItemBinding>() {
+class ShipmentBodyLayoutBinder(val shipment: ShipmentNetworkEntity): BindableItem<ShipmentItemBinding>() {
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun bind(viewBinding: ShipmentItemBinding, position: Int) {
         val sender = if (shipment.sender?.email?.isEmpty() == true) {
@@ -26,10 +27,6 @@ class ShipmentBodyAdapter(private val shipment: ShipmentNetworkEntity, private v
         viewBinding.senderValueTv.text = sender
         viewBinding.waitingTv.text = context.getString(shipment.status.nameRes)
         viewBinding.waitingValueTv.text = dateStr
-        viewBinding.root.setOnLongClickListener {
-            onLongPressListener.onBodyLongPress(shipment)
-            true
-        }
     }
 
     override fun getLayout() = R.layout.shipment_item
@@ -37,6 +34,3 @@ class ShipmentBodyAdapter(private val shipment: ShipmentNetworkEntity, private v
     override fun initializeViewBinding(view: View): ShipmentItemBinding = ShipmentItemBinding.bind(view)
 }
 
-interface OnLongPressListener {
-    fun onBodyLongPress(entity: ShipmentNetworkEntity)
-}

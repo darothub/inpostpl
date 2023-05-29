@@ -2,6 +2,7 @@ package pl.inpost.recruitmenttask.data.repository
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
 import pl.inpost.recruitmenttask.data.local.dao.ShipmentNetworkDao
 import pl.inpost.recruitmenttask.data.local.entities.ShipmentNetworkEntity
 import pl.inpost.recruitmenttask.data.model.toEntity
@@ -14,18 +15,18 @@ class ShipmentNetworkRepositoryImpl @Inject constructor(
     private val shipmentNetworkDao: ShipmentNetworkDao
 ) : ShipmentNetworkRepository {
 
-    override suspend fun getShipments(): List<ShipmentNetworkEntity> {
-        val data = getDbShipments()
-        return data.ifEmpty { getApiShipments() }
-    }
+    override fun getShipments(): LiveData<List<ShipmentNetworkEntity>> = shipmentNetworkDao.getShipmentByOrder()
 
-    private suspend fun getDbShipments() = shipmentNetworkDao.getShipmentByOrder()
-    private suspend fun getApiShipments(): List<ShipmentNetworkEntity> {
-        val shipments = api.getShipments()
-        val entities = shipments.map {
-            it.toEntity()
+    override suspend fun update(shipments: ShipmentNetworkEntity) {
+        shipmentNetworkDao.update(shipments)
+    }
+    override suspend fun getApiShipments() {
+        if (shipmentNetworkDao.getCount() == 0) {
+            val shipments = api.getShipments()
+            val entities = shipments.map {
+                it.toEntity()
+            }
+            shipmentNetworkDao.saveShipments(entities)
         }
-        shipmentNetworkDao.saveShipments(entities)
-        return entities
     }
 }

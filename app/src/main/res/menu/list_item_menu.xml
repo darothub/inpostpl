@@ -5,6 +5,6 @@
         android:id="@+id/action_archive"
         android:title="@string/archive"
         android:icon="@drawable/baseline_archive_24"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
 </menu>

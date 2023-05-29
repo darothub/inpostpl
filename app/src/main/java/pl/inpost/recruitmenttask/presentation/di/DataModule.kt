@@ -15,11 +15,14 @@ import pl.inpost.recruitmenttask.data.local.dao.ShipmentNetworkDao
 import pl.inpost.recruitmenttask.data.network.api.ShipmentApi
 import pl.inpost.recruitmenttask.data.repository.ShipmentNetworkRepository
 import pl.inpost.recruitmenttask.data.repository.ShipmentNetworkRepositoryImpl
+import javax.inject.Singleton
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
     @Provides
+    @Singleton
     fun provideDatabase(@ApplicationContext context: Context): ShipmentNetworkDatabase {
         return Room.databaseBuilder(context, ShipmentNetworkDatabase::class.java, "shipments_db")
             .build()
