@@ -9,7 +9,6 @@ import pl.inpost.recruitmenttask.databinding.ShipmentHeaderItemBinding
 
 class ShipmentHeaderLayoutBinder(private val header: String): BindableItem<ShipmentHeaderItemBinding>() {
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun bind(viewBinding: ShipmentHeaderItemBinding, position: Int) {
         viewBinding.headerTv.text = header
     }

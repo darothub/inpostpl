@@ -12,7 +12,6 @@ import pl.inpost.recruitmenttask.util.toInPostDateString
 
 class ShipmentBodyLayoutBinder(val shipment: ShipmentNetworkEntity): BindableItem<ShipmentItemBinding>() {
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun bind(viewBinding: ShipmentItemBinding, position: Int) {
         val sender = if (shipment.sender?.email?.isEmpty() == true) {
             shipment.sender.name

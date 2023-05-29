@@ -24,7 +24,6 @@ import pl.inpost.recruitmenttask.presentation.viewmodel.ShipmentListViewModel
 import pl.inpost.recruitmenttask.util.viewBinding
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @AndroidEntryPoint
 class ShipmentListFragment : Fragment(R.layout.fragment_shipment_list) {
     private val binding by viewBinding(FragmentShipmentListBinding::bind)
